@@ -1,6 +1,6 @@
 import requests
 
-START = 474
+START = 1
 END = 1000
 
 found = []
@@ -14,7 +14,7 @@ for i in range(START, END + 1):
         if r.status_code == 200:
             text = r.text.lower()
 
-            if "monthly" in text and "9" in text:
+            if "weekly" in text and "99" in text:
                 found.append(url)
                 print(f"FOUND: {url}")
             else:
@@ -32,6 +32,6 @@ with open("result.txt", "w") as f:
         for u in found:
             f.write(u + "\n")
     else:
-        f.write("No 9tk monthly page found\n")
+        f.write("No 99tk weekly page found\n")
 
 print("\nScan Finished")
