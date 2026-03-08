@@ -1,13 +1,15 @@
 name: AI Page Scanner
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
   scan:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -17,5 +19,12 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Run scanner
-        run: python scanner.py
+      - name: Run Scanner
+        run: |
+          python scanner.py
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-result
+          path: result.txt
