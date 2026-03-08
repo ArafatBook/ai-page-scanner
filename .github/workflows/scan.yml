@@ -1,4 +1,4 @@
-name: AI Page Scanner
+name: AI Weekly 99 Scanner
 
 on:
   workflow_dispatch:
@@ -20,10 +20,9 @@ jobs:
         run: pip install requests
 
       - name: Run Scanner
-        run: |
-          python scanner.py
+        run: python scanner.py
 
-      - name: Upload result
+      - name: Upload Scan Result
         uses: actions/upload-artifact@v4
         with:
           name: scan-result
