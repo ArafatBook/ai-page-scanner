@@ -2,16 +2,15 @@ import requests
 from concurrent.futures import ThreadPoolExecutor
 
 # 🔹 CONFIGURATION
-BASE_NUMBER = 474        # URL মধ্যে যা constant থাকবে
-START = 1                # প্রথম page
-END = 200                # শেষ page
-KEYWORDS = ["monthly", "9"]  # যেই keywords খুঁজবেন
+URL_PATTERN = "https://offertopup.com/topup/{NUMBER}/%20%2010120%20%F0%9F%92%8E"
+START = 1
+END = 200
+KEYWORDS = ["weekly", "99"]  # search keywords
 
 found = []
 
 def scan_page(num):
-    # URL বানানো
-    url = f"https://offertopup.com/{num}/{BASE_NUMBER}/%20%2010120%20%F0%9F%92%8E"
+    url = URL_PATTERN.format(NUMBER=num)
     try:
         r = requests.get(url, timeout=5)
         if r.status_code == 200:
@@ -26,16 +25,16 @@ def scan_page(num):
     except Exception as e:
         print(f"[Error] {url} - {e}")
 
-# 🔹 Multi-threaded scan (speed up)
+# 🔹 Multi-threaded scan
 with ThreadPoolExecutor(max_workers=20) as executor:
     executor.map(scan_page, range(START, END + 1))
 
-# 🔹 Save results
+# 🔹 Save result
 with open("result.txt", "w") as f:
     if found:
         for u in found:
             f.write(u + "\n")
     else:
-        f.write("No matching pages found\n")
+        f.write("No 99tk weekly page found\n")
 
 print("\nScan Finished!")
